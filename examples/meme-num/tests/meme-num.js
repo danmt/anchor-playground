@@ -4,6 +4,7 @@ const assert = require("assert");
 describe('meme-num', () => {
   const provider = anchor.Provider.local();
   anchor.setProvider(provider);
+  let _memeNumAccount = undefined;
 
   it('Is initialized!', async () => {
     // arrange
@@ -21,6 +22,23 @@ describe('meme-num', () => {
         instruction
       ],
       signers: [memeNumAccount]
+    });
+    // assert
+    const account = await program.account.memeNumAccount.fetch(memeNumAccount.publicKey);
+    assert.ok(account.data.eq(expectedData));
+    _memeNumAccount = memeNumAccount;
+  });
+
+  it("Updates a previously created account", async () => {
+    // arrange
+    const memeNumAccount = _memeNumAccount;
+    const program = anchor.workspace.MemeNum;
+    const expectedData = new anchor.BN(4321);
+    // act
+    await program.rpc.update(expectedData, {
+      accounts: {
+        memeNumAccount: memeNumAccount.publicKey,
+      },
     });
     // assert
     const account = await program.account.memeNumAccount.fetch(memeNumAccount.publicKey);

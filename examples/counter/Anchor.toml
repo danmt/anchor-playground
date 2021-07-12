@@ -1,0 +1,3 @@
+[provider]
+cluster = "localnet"
+wallet = "/home/danmt/.config/solana/id.json"

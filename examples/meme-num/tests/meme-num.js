@@ -2,8 +2,7 @@ const anchor = require('@project-serum/anchor');
 const assert = require("assert");
 
 describe('meme-num', () => {
-  const provider = anchor.Provider.local();
-  anchor.setProvider(provider);
+  anchor.setProvider(anchor.Provider.env());
   let _memeNumAccount = undefined;
 
   it('Is initialized!', async () => {
